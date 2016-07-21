@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using Squad.MathS ;
-public class RotatePoint : MonoBehaviour {
+public class RotatePoint : MonoBehaviour { // obsolete
 
 	// Use this for initialization
 	void Start () {
