@@ -1,0 +1,34 @@
+﻿using UnityEngine;
+// using System.Collections;
+using Squad.MathS ;
+public class MachineGun : Weapon {
+
+	[RangeAttribute(0.001f , 1f)] public float GunPointRadius = 0.5f ;
+	private float nextAngle = 0 ;
+	[RangeAttribute(0,360)] public float arcDistance = 30f ;
+	public float ArcDistance {
+		get {
+			return arcDistance * Mathf.PI/180 ;
+		}
+	}
+
+	private void Update () {
+		if(Time.time > NextShot) { // Same for all guns scripts
+			NextShot += ShotSpan ;
+			Fire() ;
+			RotateGun() ;
+		}
+	}
+	private void Fire() { // MathS function is custom and can be used by including the library by Squad.MathS
+		nextAngle += ArcDistance ;
+		var pos = MathS.RotateAroundAxis(GunPointRadius , nextAngle , transform.rotation.eulerAngles.y * Mathf.PI/180 , transform.position) ;
+		var clone = Instantiate(object_MuzzleFlash , pos , Quaternion.identity) ;
+		Destroy(clone , MuzzleSpan);
+	}
+	private void RotateGun() {
+
+	}
+	public void OnDrawGizmos() {
+		Gizmos.DrawWireSphere(transform.position , GunPointRadius) ;
+	}
+}
